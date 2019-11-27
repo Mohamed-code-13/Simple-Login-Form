@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1574807769 source:c:\users\kijoo-pc\c++ projects\loginsystem\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
