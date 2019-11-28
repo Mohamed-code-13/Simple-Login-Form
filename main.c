@@ -10,8 +10,7 @@ it will create a new file for each user
 #include <string.h>
 
 // our variables
-char account[20], newAccount[20], *data, first[20], last[20], age[20];
-int choice;
+char newAccount[20], first[20], last[20], age[20];
 
 // welcome the user and give him the menu
 void menu()
@@ -19,7 +18,7 @@ void menu()
     printf("Hello and welcome to my application\n");
     printf("Enter 1 if you already have an account\n");
     printf("Enter 2 for create new account\n");
-    printf("Enter 11 to exit\n");
+    printf("Enter -1 to exit\n");
 }
 
 // get the choice from the user
@@ -35,13 +34,14 @@ int choose()
 // get the name of the account that user have
 char * getAccount()
 {
+    char *account = (char *)malloc(20);
     printf("\nEnter the name of the account: ");
     scanf("%s", account);
     return account;
 }
 
 // read the file of the account
-char * read()
+char * read(char *account)
 {
     FILE *f = fopen(account, "r");
     // to get the numbers of bytes of the file
@@ -49,7 +49,7 @@ char * read()
     unsigned int size = ftell(f);
     fseek(f, 0, SEEK_SET);
 
-    data = (char *)malloc(size);
+    char *data = (char *)malloc(size);
 
     fread(data, sizeof(char), size, f);
     return data;
@@ -100,8 +100,9 @@ int main()
 {
     menu();  // print the menu
 
+    int choice;
 
-    while (choice != 11)
+    while (choice != -1)
     {
         choice = choose();  // get the choice from the user
 
@@ -119,11 +120,9 @@ int main()
             }
 
             // read and print the file
-            char *acc = read();
+            char *acc = read(file);
             printf("%s", acc);
 
-            // free the memory we use
-            free(data);
             // clear and close the file we worked in
             fclose(f);
         }
@@ -132,7 +131,7 @@ int main()
             getNewAcc();
             createAccount();
         }
-        else if (choice == 11)
+        else if (choice == -1)
         {
             exit(1);
         }
